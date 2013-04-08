@@ -1,7 +1,0 @@
-# Logfile created on 2013-04-08 14:54:53 +0200 by logger.rb/25413
-D, [2013-04-08T14:55:12.220131 #4812] DEBUG -- :   [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" [0m
-D, [2013-04-08T15:02:18.049487 #3768] DEBUG -- :   [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" LIMIT 1[0m
-D, [2013-04-08T15:02:28.352077 #3768] DEBUG -- :   [1m[35mUser Load (1.0ms)[0m  SELECT "users".* FROM "users" LIMIT 1
-D, [2013-04-08T15:31:03.311167 #3572] DEBUG -- :   [1m[36mUser Load (1.0ms)[0m  [1mSELECT "users".* FROM "users" LIMIT 1[0m
-D, [2013-04-08T15:32:16.716365 #4000] DEBUG -- :   [1m[36mUser Load (0.0ms)[0m  [1mSELECT "users".* FROM "users" LIMIT 1[0m
-D, [2013-04-08T17:09:34.939173 #3913] DEBUG -- :   [1m[36mUser Load (19.7ms)[0m  [1mSELECT "users".* FROM "users" LIMIT 1[0m

@@ -14,7 +14,8 @@ describe MyAPI do
       it "returns empty array" do
         get "/test"
         last_response.status.should be_equal 200
-        JSON.parse(last_response.body).should == ["Test value"]
+        #JSON.parse(last_response.body).should == ["Test value"]
+        JSON.parse(last_response.body).should == {"user"=>{"id"=>1, "name"=>"Nikola Nikolic", "state"=>"Srbija"}}
       end
     end
   end

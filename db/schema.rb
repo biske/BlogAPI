@@ -9,8 +9,18 @@ class Schema < ActiveRecord::Migration
       t.string :name
       t.string :state
     end
- 
-    add_index :users, :name
+    
+    create_table :posts do |t|
+      t.string      :title
+      t.text        :content
+      t.references  :user
+    end
+    
+    create_table :comments do |t|
+      t.text  :content
+      t.references :post
+      t.references :user
+    end
   end
 end
  

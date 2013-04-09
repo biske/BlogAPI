@@ -1,7 +1,7 @@
 require 'bundler/setup'
 
 Bundler.require
-require './my_api'
+require './api'
 
-run MyAPI
+run API
 

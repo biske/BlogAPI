@@ -3,7 +3,7 @@
 require './user'
 require 'active_record'
 
-ActiveRecord::Base.configurations = YAML::load(IO.read('database.yml'))
+ActiveRecord::Base.configurations = YAML::load(IO.read('config/database.yml'))
 ActiveRecord::Base.establish_connection("development")
 
 User.create name: "John",   state: "England"

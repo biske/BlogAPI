@@ -1,10 +1,10 @@
 require 'active_record'
 require 'sqlite3'
-require './user'
-require './post'
-require './comment'
+require './models/user'
+require './models/post'
+require './models/comment'
 
-ActiveRecord::Base.configurations = YAML::load(IO.read('database.yml'))
+ActiveRecord::Base.configurations = YAML::load(IO.read('config/database.yml'))
 ActiveRecord::Base.establish_connection("development")
 #ActiveRecord::Base.logger = Logger.new('debug.log')
 

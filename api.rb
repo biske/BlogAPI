@@ -1,5 +1,7 @@
 require 'bundler/setup'
 require './models/user'
+require './models/post'
+require './models/comment'
 require 'active_record'
 Bundler.require
 
@@ -16,12 +18,37 @@ class API < Grape::API
       User.all
     end
     
-    desc "Get user by id"
+    desc "Get user by id."
     params do
       requires :id, :type => Integer, :desc => "User id."
     end
     get ":id" do
       User.find(params[:id])
+    end
+    
+    desc "Create new user."
+    params do
+      requires :name,   :type => String, :desc => "User name."
+      requires :state,  :type => String, :desc => "User state."
+    end
+    post "/" do
+      User.create name: params[:name], state: params[:state]
+    end
+    
+    desc "Update user."
+    params do
+      requires :name,   :type => String, :desc => "User name."
+      requires :state,  :type => String, :desc => "User state."
+    end
+    put ":id" do
+      user = User.find(params[:id])
+      user.update_attributes name: params[:name], state: params[:state]
+      user.save
+    end
+    
+    desc "Delete user."
+    delete :last do
+      User.last.destroy
     end
   end
 end

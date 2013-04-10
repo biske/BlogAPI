@@ -49,9 +49,14 @@ describe API do
       end
       
       # ---------------Posts----------------------
-      describe "Get all user posts" do
-        it "should return all user posts" do
-          get "users/1/posts"
+      describe "Get user posts" do
+        it "should return all user posts with all comments" do
+          get "users/1/posts", { include: true, limit: 3 }
+          last_response.status.should be_equal 200
+        end
+        
+        it "should return all user posts without comments" do
+          get "users/1/posts", { include: false }
           last_response.status.should be_equal 200
         end
       end
@@ -61,6 +66,14 @@ describe API do
           get "users/1/posts/last_five"
           last_response.status.should be_equal 200
           JSON.parse(last_response.body).size.should be_eql 5
+        end
+      end
+      
+      describe "Get user post" do
+        it "should return one user post" do
+          get "posts/1"
+          last_response.status.should be_equal 200
+          JSON.parse(last_response.body).size.should be_eql 1
         end
       end
       
@@ -86,7 +99,19 @@ describe API do
       end
       
       # ---------------Comments----------------------
-      # TODO
+      describe "Get post comments" do
+        it "should get post comments" do
+          get "posts/1/comments"
+          last_response.status.should be_equal 200
+        end
+      end
+      
+      describe "Create comment" do
+        it "should create comment for post" do
+          post "posts/1/comments", { content: "What a post!", user_id: 1 }
+          last_response.status.should be_equal 201
+        end
+      end
     end
   end
 end

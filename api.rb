@@ -11,6 +11,11 @@ ActiveRecord::Base.logger = Logger.new('log/debug.log')
 
 class API < Grape::API
   format :json
+  helpers do
+    def logger
+      API.logger
+    end
+  end
 
   resource :users do
     desc "Return all users."
@@ -51,12 +56,20 @@ class API < Grape::API
       User.last.destroy
     end
     
-    desc "Get all user posts"
+    desc "Get user posts"
     params do
       requires :id, :type => Integer, :desc => "User id."
     end
     get ":id/posts" do
-      User.find(params[:id]).posts
+      if params[:include]
+        if params[:limit]
+          Post.where(:user_id => params[:id]).limit(params[:limit].to_i).as_json(:include => {:comments => { :only => :content}})
+        else
+          User.find(params[:id]).posts.as_json(:include => {:comments => { :only => :content}})
+        end
+      else
+        User.find(params[:id]).posts
+      end
     end
     
     desc "Get last 5 user's posts."
@@ -95,4 +108,32 @@ class API < Grape::API
       User.find(params[:id]).posts.order("created_at ASC").last.destroy
     end
   end
+  
+  #----------------------Posts----------------------------
+  desc "Get one user post."
+  params do
+    requires :id, :type => Integer, :desc => "Post id."
+  end
+  get "posts/:id" do
+    Post.find(params[:id])
+  end
+  
+  #----------------------Comments------------------------- 
+  desc "Get comments"
+  get "posts/:id/comments" do
+    Post.find(params[:id]).comments
+  end
+  
+  desc "Create new comment."
+  params do
+    requires :id, :type => Integer, :desc => "Post id."
+    requires :content, :type => String, :desc => "Comment content."
+    requires :user_id, :type => Integer, :desc => "User id."
+  end
+  post "posts/:id/comments" do
+    post = Post.find(params[:id])
+    post.comments.create content: params[:content], user_id: params[:user_id] 
+  end
+  
+  
 end

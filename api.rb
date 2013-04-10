@@ -46,9 +46,53 @@ class API < Grape::API
       user.save
     end
     
-    desc "Delete user."
+    desc "Delete last user."
     delete :last do
       User.last.destroy
+    end
+    
+    desc "Get all user posts"
+    params do
+      requires :id, :type => Integer, :desc => "User id."
+    end
+    get ":id/posts" do
+      User.find(params[:id]).posts
+    end
+    
+    desc "Get last 5 user's posts."
+    params do
+      requires :id, :type => Integer, :desc => "User id."
+    end
+    get ":id/posts/last_five" do
+      User.find(params[:id]).posts.order("created_at DESC").limit(5)
+    end
+    
+    desc "Create new post."
+    params do
+      requires :id, :type => Integer, :desc => "User id."
+    end
+    post ":id/posts" do
+      user = User.find(params[:id])
+      user.posts.create title: params[:title], content: params[:content]
+    end
+    
+    desc "Update post."
+    params do
+      requires :title,    :type => String, :desc => "Post title."
+      requires :content,  :type => String, :desc => "Post content."
+    end
+    put ":id/posts/:post_id" do
+      post = User.find(params[:id]).posts.find(params[:post_id])
+      post.update_attributes title: params[:title], content: params[:content]
+      post.save
+    end
+    
+    desc "Delete last user's post."
+    params do
+      requires :id, :type => Integer, :desc => "User's id."
+    end
+    delete ":id/posts/last" do
+      User.find(params[:id]).posts.order("created_at ASC").last.destroy
     end
   end
 end

@@ -6,17 +6,17 @@ require './models/comment'
 
 ActiveRecord::Base.configurations = YAML::load(IO.read('config/database.yml'))
 ActiveRecord::Base.establish_connection("development")
-#ActiveRecord::Base.logger = Logger.new('debug.log')
 
+user1 = User.create! name: "Joe",   state: "England"
 
-User.all.each do |user|
-  puts "User id:\t#{user.id}"
-  puts "User name:\t#{user.name}"
-  puts "User state:\t#{user.state}"
-  
-  puts "Clanci:"
-  user.posts.each do |post|
-    puts post.content
-  end
-  puts "----------------------------------------------"
-end
+puts user1.inspect
+
+post1 = user1.posts.create! title: "RoR introduction", content: "This is intoduction to Ruby on Rails."
+
+puts post1.inspect
+
+comment1 = post1.comments.create content: "This is great article!", user_id: user1.id
+#comment1 = post1.comments.create content: "This is great article!"
+#comment1.user = user1
+#comment1.save
+puts comment1.inspect

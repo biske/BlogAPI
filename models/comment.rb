@@ -6,5 +6,5 @@ class Comment < ActiveRecord::Base
   
   validates :content, :presence => true
   
-  attr_accessible :content
+  attr_accessible :content, :user_id
 end

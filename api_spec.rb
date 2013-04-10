@@ -36,7 +36,7 @@ describe API do
       
       describe "Update user" do
         it "updates user" do
-          put "users/3", { name: "John", state: "Australia"}
+          put "users/3", { name: "Jimmy", state: "Australia"}
           last_response.status.should be_equal 200
         end
       end
@@ -44,10 +44,49 @@ describe API do
       describe "Delete user" do
         it "deletes user" do
           delete "users/last"
-          puts last_response.status.inspect
           last_response.status.should be_equal 200
         end
       end
+      
+      # ---------------Posts----------------------
+      describe "Get all user posts" do
+        it "should return all user posts" do
+          get "users/1/posts"
+          last_response.status.should be_equal 200
+        end
+      end
+      
+      describe "Get last 5 user posts" do
+        it "should return last 5 user posts" do
+          get "users/1/posts/last_five"
+          last_response.status.should be_equal 200
+          JSON.parse(last_response.body).size.should be_eql 5
+        end
+      end
+      
+      describe "Create new post" do
+        it "should create new post" do
+          post "users/1/posts", { title: "From Java to Ruby", content: "This article exaplains moving from Java world to Ruby one."}
+          last_response.status.should be_equal 201
+        end
+      end
+      
+      describe "Update post" do
+        it "should update post" do
+          put "users/1/posts/1", { title: "From C# to Ruby", content: "This article exaplains moving from C# world to Ruby one."}
+          last_response.status.should be_equal 200
+        end
+      end
+      
+      describe "Delete post" do
+        it "should delete user's last created post" do
+          delete "users/1/posts/last"
+          last_response.status.should be_equal 200
+        end
+      end
+      
+      # ---------------Comments----------------------
+      # TODO
     end
   end
 end

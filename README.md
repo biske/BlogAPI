@@ -12,13 +12,13 @@ git clone git://github.com/biske/BlogAPI.git
 ```
 
 ### Installing required gems
-To install required gems needed by BlogAPI, go to application root folder and type:
+To install required gems needed by BlogAPI, type:
 ```bash
 bundle install
 ```
 
 ### Setup database
-To setup and populate database with sample data, go to application root folder and type:
+To setup and populate database with sample data, type:
 ```bash
 ruby db/schema.rb
 ruby db/seeds.rb
@@ -36,11 +36,16 @@ To run application, type:
 rackup -p 3333
 ```
 Then go to browser and insert some url, for ex.:
+```bash
 http://localhost:3333/users
+```
+
+
+* Note: All commands should be issued from application root path.
 
 # Licence
 
-Copyright (C) 2012 Ivan Bisevac
+Copyright (C) 2013 Ivan Bisevac
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
